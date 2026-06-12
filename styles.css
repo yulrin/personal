@@ -1,0 +1,361 @@
+:root {
+  --app-color: #e86f83;
+  --ink: #2f211b;
+  --needle: #9b6638;
+  --needle-dark: #5d3822;
+  --panel: #fffaf1;
+  --line: #ded1bd;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.overlay {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.pet {
+  position: relative;
+  width: 260px;
+  height: 235px;
+  overflow: hidden;
+}
+
+.drag-zone {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  -webkit-app-region: drag;
+  cursor: grab;
+}
+
+.hamster-wrap {
+  position: absolute;
+  left: 40px;
+  top: 18px;
+  width: 180px;
+  height: 180px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hamster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 8px 3px rgba(47, 33, 27, 0.22));
+}
+
+.blink-lid {
+  position: absolute;
+  top: 52px;
+  width: 22px;
+  height: 10px;
+  border-radius: 6px;
+  background: #caa88a;
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: center;
+}
+
+.blink-lid-left {
+  left: 44px;
+}
+
+.blink-lid-right {
+  right: 44px;
+}
+
+.pet.idle .hamster {
+  animation: idle-breathe 3.2s ease-in-out infinite;
+}
+
+.pet.idle .blink-lid {
+  animation: idle-blink 4.6s ease-in-out infinite;
+}
+
+.pet.knitting .hamster {
+  animation: knit-breathe 2.8s ease-in-out infinite;
+}
+
+.knit-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.needle line {
+  stroke: var(--needle);
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.needle circle,
+.needle path {
+  fill: var(--needle);
+  stroke: var(--needle-dark);
+  stroke-width: 2;
+}
+
+.needle-left,
+.needle-right {
+  transform-origin: 132px 122px;
+  transition: opacity 600ms ease;
+}
+
+.working-yarn {
+  fill: none;
+  stroke: var(--app-color);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 13 8;
+  filter: drop-shadow(1px 2px 0 rgba(47, 33, 27, 0.28));
+  transition: stroke 400ms ease;
+}
+
+.live-loop {
+  fill: color-mix(in srgb, var(--app-color) 18%, transparent);
+  stroke: var(--app-color);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(1px 2px 0 rgba(47, 33, 27, 0.24));
+  transition: opacity 120ms linear, stroke 400ms ease, fill 400ms ease;
+}
+
+.yarn-hook {
+  fill: var(--app-color);
+  stroke: #6e302f;
+  stroke-width: 2;
+  transform-origin: 132px 121px;
+  transition: opacity 500ms ease, fill 400ms ease;
+}
+
+.fabric-shadow rect {
+  fill: rgba(47, 33, 27, 0.15);
+}
+
+.fabric-rows rect {
+  stroke: rgba(47, 33, 27, 0.12);
+  stroke-width: 1;
+}
+
+.fabric-rows path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.42);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+
+.status-pill {
+  position: absolute;
+  left: 66px;
+  bottom: 4px;
+  z-index: 11;
+  min-width: 128px;
+  max-width: 154px;
+  padding: 5px 10px;
+  border: 2px solid rgba(47, 33, 27, 0.85);
+  border-radius: 999px;
+  background: rgba(255, 250, 241, 0.94);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: auto;
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+}
+
+.sleeping .needle-left,
+.sleeping .needle-right,
+.sleeping .working-yarn,
+.sleeping .live-loop,
+.sleeping .yarn-hook {
+  animation: none;
+}
+
+.sleeping .hamster-wrap {
+  animation: sleepy-breathe 2.8s ease-in-out infinite;
+  filter: brightness(0.92) saturate(0.88);
+}
+
+.sleeping .knit-layer {
+  opacity: 0.45;
+  transition: opacity 800ms ease;
+}
+
+.sleeping::after {
+  content: "Z";
+  position: absolute;
+  right: 42px;
+  top: 24px;
+  z-index: 12;
+  color: #5579a7;
+  font-size: 24px;
+  font-weight: 800;
+  text-shadow: 2px 2px 0 white;
+  animation: z-float 1.8s ease-in-out infinite;
+}
+
+.sleeping::before {
+  content: "z";
+  position: absolute;
+  right: 58px;
+  top: 12px;
+  z-index: 12;
+  color: #7a96bf;
+  font-size: 16px;
+  font-weight: 800;
+  text-shadow: 1px 1px 0 white;
+  animation: z-float 2.4s ease-in-out infinite 0.6s;
+}
+
+.dashboard {
+  width: 100%;
+  height: 100%;
+  padding: 18px;
+  background: #fffaf1;
+  color: var(--ink);
+}
+
+.dashboard h1 {
+  margin: 0 0 10px;
+  font-size: 21px;
+  letter-spacing: 0;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.metric {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  background: white;
+}
+
+.metric b {
+  display: block;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.metric span {
+  color: #6f675e;
+  font-size: 12px;
+}
+
+.preview {
+  width: 100%;
+  height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 14px;
+  background: #f7efe2;
+}
+
+.app-list {
+  height: 195px;
+  overflow: auto;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.app-row {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(222, 209, 189, 0.6);
+  font-size: 13px;
+}
+
+.swatch {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+button {
+  min-height: 34px;
+  border: 1px solid #b79c77;
+  border-radius: 8px;
+  padding: 0 12px;
+  background: #2f2a25;
+  color: #fffaf1;
+  font: inherit;
+  cursor: pointer;
+}
+
+.privacy {
+  margin-top: 12px;
+  color: #6f675e;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+@keyframes idle-breathe {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50% { transform: scale(1.015, 0.985) translateY(1px); }
+}
+
+@keyframes knit-breathe {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50% { transform: scale(1.008, 0.994) translateY(0.5px); }
+}
+
+@keyframes idle-blink {
+  0%, 42%, 48%, 100% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  44%, 46% {
+    opacity: 0.92;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes sleepy-breathe {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(4px) scale(0.985, 1.01); }
+}
+
+@keyframes z-float {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(-8px); opacity: 1; }
+}

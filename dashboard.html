@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Knit Hamster Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="dashboard">
+    <h1>오늘의 뜨개</h1>
+
+    <section class="summary">
+      <div class="metric">
+        <b id="totalTime">0s</b>
+        <span>총 활동 시간</span>
+      </div>
+      <div class="metric">
+        <b id="stateText">뜨개질 중</b>
+        <span>현재 상태</span>
+      </div>
+    </section>
+
+    <canvas id="preview" class="preview" width="352" height="48"></canvas>
+    <div id="appList" class="app-list"></div>
+
+    <div class="actions">
+      <button id="resetBtn" type="button">오늘 초기화</button>
+      <button id="quitBtn" type="button">종료</button>
+    </div>
+
+    <p class="privacy">입력 내용은 저장하지 않습니다. 앱 이름과 활동 시간만 로컬에 기록합니다.</p>
+  </main>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

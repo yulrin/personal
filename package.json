@@ -1,0 +1,12 @@
+{
+  "name": "knit-hamster-electron",
+  "version": "0.2.0",
+  "description": "A tiny Windows desktop time tracker with a knitting hamster.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^32.3.3"
+  }
+}
